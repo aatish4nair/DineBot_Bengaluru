@@ -89,8 +89,15 @@ st.caption("Choose your preferences and get your recommendations.")
 config = UIConfig.from_env()
 client = ApiClient(config=config)
 
-# Fetch places from backend (dynamic for Hugging Face dataset); fallback to default list
-DEFAULT_PLACES = ["Pune", "Mumbai", "Bangalore", "Delhi", "Chennai", "Hyderabad", "Kolkata"]
+# Fetch places from backend (dynamic from dataset); fallback = 30 Bengaluru regions (ManikaSaini/zomato-restaurant-recommendation)
+DEFAULT_PLACES = [
+    "BTM", "Banashankari", "Bannerghatta Road", "Basavanagudi", "Bellandur",
+    "Brigade Road", "Brookefield", "Church Street", "Electronic City", "Frazer Town",
+    "HSR", "Indiranagar", "JP Nagar", "Jayanagar", "Kalyan Nagar", "Kammanahalli",
+    "Koramangala 4th Block", "Koramangala 5th Block", "Koramangala 6th Block", "Koramangala 7th Block",
+    "Lavelle Road", "MG Road", "Malleshwaram", "Marathahalli", "New BEL Road",
+    "Old Airport Road", "Rajajinagar", "Residency Road", "Sarjapur Road", "Whitefield",
+]
 if "places" not in st.session_state:
     try:
         import requests
