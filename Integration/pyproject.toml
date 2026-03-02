@@ -1,0 +1,9 @@
+[project]
+name = "ai-restaurant-integration"
+version = "0.1.0"
+description = "Cross-phase integration validation for AI Restaurant Recommendation"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

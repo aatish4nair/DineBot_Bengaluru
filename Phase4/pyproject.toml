@@ -1,0 +1,15 @@
+[project]
+name = "ai-restaurant-recommendation-phase4"
+version = "0.1.0"
+description = "AI Restaurant Recommendation Service (Phase 4 LLM orchestration)"
+requires-python = ">=3.10"
+dependencies = [
+    "python-dotenv",
+    "groq",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: requires Groq API access",
+]
