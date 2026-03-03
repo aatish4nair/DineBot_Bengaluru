@@ -65,9 +65,11 @@ st.markdown("""
     [data-testid="stSelectbox"] > div > div:focus-within { border-color: #d4a574 !important; }
     [data-testid="stSelectbox"] svg, div[data-baseweb="select"] svg { fill: #0F0F0F !important; color: #0F0F0F !important; }
     [data-testid="stWidgetLabel"] { color: #0F0F0F !important; }
-    div[data-testid="stFormSubmitButton"] { text-align: center; margin-top: 1rem; }
+    div[data-testid="stFormSubmitButton"] { 
+        display: flex; justify-content: center; align-items: center; margin-top: 1.5rem; 
+    }
     div[data-testid="stFormSubmitButton"] > button {
-        width: 100%; max-width: 100%; margin: 0 auto; display: block;
+        width: auto; min-width: 220px; max-width: 280px; margin: 0 auto; display: block;
         padding: 0.75rem 1.5rem !important; font-size: 1.25rem !important; font-weight: 600 !important;
         border-radius: 8px; border: none !important; background: #E67C3F !important; color: #0F0F0F !important;
     }
@@ -112,6 +114,7 @@ if "places" not in st.session_state:
 PLACES = st.session_state["places"]
 
 with st.sidebar:
+    use_demo = st.checkbox("Use demo response", value=True, help="Show instant demo results without calling the backend. Turn OFF when backend is running.")
     with st.expander("API configuration", expanded=False):
         st.write("Backend:", f"`{config.api_base_url}`")
 
@@ -208,13 +211,21 @@ if submitted:
             rating_max=float(rating_max),
             cuisines=[cuisine],
         )
+        rec = None
         try:
-            with st.spinner("Finding recommendations..."):
-                rec = client.recommend(prefs)
+            if use_demo:
+                from phase7_ui.demo import demo_recommendation
+                rec = demo_recommendation()
+            else:
+                with st.spinner("Finding recommendations..."):
+                    rec = client.recommend(prefs)
         except ApiError as e:
             st.error(str(e))
-            st.info("Ensure the backend is running: `USE_SAMPLE_DATASET_ONLY=1 uvicorn App.backend.main:app --port 8000`")
-        else:
+            st.info("Turn ON 'Use demo response' in the sidebar for instant results, or ensure the backend is running.")
+        except Exception as e:
+            st.error(f"Something went wrong: {e}")
+            st.info("Try turning ON 'Use demo response' in the sidebar for instant results.")
+        if rec:
             all_restaurants = [rec.recommended_restaurant]
             if rec.alternatives:
                 all_restaurants.extend(rec.alternatives)

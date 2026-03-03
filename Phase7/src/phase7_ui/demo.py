@@ -6,7 +6,7 @@ from .models import RecommendationView, RestaurantView
 def demo_recommendation() -> RecommendationView:
     main = RestaurantView(
         name="Cafe Roma",
-        location="Pune",
+        location="Koramangala 5th Block",
         price=2,
         rating=4.4,
         cuisine="Italian, Cafe",
@@ -14,14 +14,14 @@ def demo_recommendation() -> RecommendationView:
     alts = [
         RestaurantView(
             name="Bistro One",
-            location="Pune",
+            location="Indiranagar",
             price=2,
             rating=4.2,
             cuisine="Italian",
         ),
         RestaurantView(
             name="Spice Hub",
-            location="Pune",
+            location="HSR",
             price=3,
             rating=4.1,
             cuisine="Indian",
